@@ -1,23 +1,33 @@
 import Link from "next/link";
+import MarketGrid from "../components/MarketGrid";
+import NewsFeed from "../components/NewsFeed";
 
 export default function Home() {
   return (
-    <main className="p-8">
-      <h1 className="text-3xl font-bold">CoinDoor</h1>
+    <section className="home-hero">
+      <div className="hero-card">
+        <img src="/logo.png" alt="CoinDoor" className="logo" />
+        <h1 className="hero-title">Crypto Insights. Live Data. Smarter Decisions.</h1>
+        <p className="hero-sub">Real-time charts, curated Web3 news, and education updates.</p>
 
-      <section className="mt-6 space-y-4">
-        <div>
-          <Link href="/markets" className="text-blue-500 underline">
-            View Markets
-          </Link>
+        <div className="hero-ctas">
+          <Link href="/markets"><a className="btn-primary">Charts</a></Link>
+          <a href="#news" className="btn-outline">News</a>
         </div>
+      </div>
 
-        <div>
-          <Link href="/news" className="text-blue-500 underline">
-            Latest News
-          </Link>
+      <section className="section">
+        <h2 className="section-title">Market Snapshot</h2>
+        <MarketGrid />
+      </section>
+
+      <section id="news" className="section">
+        <h2 className="section-title">Latest News</h2>
+        <NewsFeed limit={6} />
+        <div style={{ marginTop: 14 }}>
+          <Link href="/news"><a className="link-more">See all news →</a></Link>
         </div>
       </section>
-    </main>
+    </section>
   );
 }
