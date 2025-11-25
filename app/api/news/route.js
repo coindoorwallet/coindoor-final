@@ -1,33 +1,30 @@
-import { NextResponse } from "next/server";
-
 export async function GET() {
-  const token = process.env.CRYPTOPANIC_TOKEN;
-  if (!token) {
-    return NextResponse.json({ error: "CryptoPanic token not configured" }, { status: 500 });
-  }
-
   try {
-    const url = `https://cryptopanic.com/api/v1/posts/?auth_token=${token}&public=true&page=1`;
-    const r = await fetch(url);
-    if (!r.ok) {
-      const text = await r.text();
-      console.error("CryptoPanic error:", r.status, text);
-      return NextResponse.json({ error: "Failed to fetch news" }, { status: 502 });
+    const token = process.env.CRYPTOPANIC_TOKEN;
+
+    if (!token) {
+      return Response.json(
+        { error: "CRYPTOPANIC_TOKEN missing" },
+        { status: 500 }
+      );
     }
+
+    const r = await fetch(
+      `https://cryptopanic.com/api/v1/posts/?auth_token=${token}&filter=important`,
+      { next: { revalidate: 60 } }
+    );
+
     const data = await r.json();
 
-    // minimal mapping to keep payload small
-    const items = (data.results || []).map((it: any) => ({
+    // FIXED: removed TypeScript
+    const items = (data.results || []).map((it) => ({
       id: it.id,
       title: it.title,
-      url: it.url,
-      domain: it.domain,
-      published_at: it.published_at
+      url: it.url
     }));
 
-    return NextResponse.json({ results: items }, { status: 200, headers: { "cache-control": "s-maxage=60, stale-while-revalidate=120" } });
+    return Response.json({ items });
   } catch (e) {
-    console.error("API error", e);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    return Response.json({ error: e.message }, { status: 500 });
   }
 }
