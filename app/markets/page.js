@@ -1,26 +1,25 @@
-import TradingViewChart from "../../components/TradingViewChart";
+"use client";
+import { useEffect } from "react";
 
-export default function ChartsPage() {
+export default function Markets() {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-crypto-mkt-screener.js";
+    script.async = true;
+    script.innerHTML = JSON.stringify({
+      width: "100%",
+      height: 800,
+      colorTheme: "dark",
+      isTransparent: false,
+      locale: "en",
+    });
+    document.getElementById("tv-container").appendChild(script);
+  }, []);
+
   return (
-    <section>
-      <h1 className="text-3xl font-bold mb-6">Live Charts</h1>
-
-      <div className="rounded-lg p-4 bg-[#071017] border border-[#0f1718] mb-6">
-        <h2 className="mb-3 font-semibold">BTC / USDT (Featured)</h2>
-        <TradingViewChart symbol="BINANCE:BTCUSDT" height={540} />
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="rounded-lg p-4 bg-[#071017] border border-[#0f1718]">
-          <h3 className="font-medium mb-3">ETH / USDT</h3>
-          <TradingViewChart symbol="BINANCE:ETHUSDT" height={300} />
-        </div>
-
-        <div className="rounded-lg p-4 bg-[#071017] border border-[#0f1718]">
-          <h3 className="font-medium mb-3">XRP / USDT</h3>
-          <TradingViewChart symbol="BINANCE:XRPUSDT" height={300} />
-        </div>
-      </div>
-    </section>
+    <main className="min-h-screen bg-black text-white px-6 py-10">
+      <h1 className="text-3xl font-bold mb-6">Crypto Markets</h1>
+      <div id="tv-container"></div>
+    </main>
   );
 }
