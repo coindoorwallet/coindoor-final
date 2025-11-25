@@ -1,49 +1,46 @@
+"use client";
+
 import Link from "next/link";
-import NewsFeed from "../components/NewsFeed";
+import Image from "next/image";
 
 export default function Home() {
   return (
-    <section>
-      <div className="rounded-xl p-10 bg-[#071017] border border-[#0f1718]">
-        <div className="flex flex-col items-center text-center gap-4">
-          <img src="/logo.png" alt="CoinDoor" className="h-20 w-auto" />
-          <h1 className="text-4xl font-extrabold mt-2">Crypto Insights. Live Data. Smarter Decisions.</h1>
-          <p className="text-gray-300 max-w-2xl">
-            Real-time charts, breaking Web3 news, and practical education updates. No login — just reliable market visuals and curated updates.
-          </p>
-
-          <div className="mt-6 flex gap-3">
-            <Link href="/charts">
-              <a className="px-5 py-3 rounded-md bg-coin-green text-black font-semibold shadow">Charts</a>
-            </Link>
-
-            <a href="#news" className="px-5 py-3 rounded-md border border-[#1b1f1c] text-gray-200">News</a>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-10 grid md:grid-cols-3 gap-6">
-        <div className="md:col-span-2">
-          <section id="news" className="rounded-lg p-6 bg-[#071017] border border-[#0f1718]">
-            <h2 className="text-2xl font-semibold mb-4">Latest Web3 & Crypto News</h2>
-            <NewsFeed />
-          </section>
+    <main className="min-h-screen bg-black text-white flex flex-col items-center">
+      <header className="w-full flex justify-between items-center px-6 py-4 border-b border-[#1a1a1a]">
+        <div className="flex items-center gap-3">
+          <Image src="/logo.png" width={42} height={42} alt="CoinDoor Logo" />
+          <h1 className="text-xl font-semibold">CoinDoor</h1>
         </div>
 
-        <aside>
-          <div className="rounded-lg p-6 bg-[#071017] border border-[#0f1718]">
-            <h3 className="font-semibold mb-3">Why CoinDoor?</h3>
-            <ul className="text-gray-300 list-disc ml-5">
-              <li>Interactive live TradingView charts</li>
-              <li>Curated crypto & Web3 news</li>
-              <li>Education waitlist (Email + WhatsApp)</li>
-            </ul>
-            <div className="mt-4">
-              <a href="/subscribe" className="inline-block px-4 py-2 rounded bg-coin-green text-black font-medium">Join Waitlist</a>
-            </div>
-          </div>
-        </aside>
-      </div>
-    </section>
-  );
-}
+        <nav className="flex gap-6 text-gray-300">
+          <Link href="/markets">Markets</Link>
+          <Link href="/news">News</Link>
+        </nav>
+      </header>
+
+      <section className="mt-24 text-center px-4">
+        <h1 className="text-5xl font-bold mb-6">
+          Crypto Insights. Live Data.<br />Smarter Decisions.
+        </h1>
+
+        <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-10">
+          CoinDoor gives you real-time crypto charts, market updates, and breaking Web3 news.
+        </p>
+
+        <div className="flex justify-center gap-6">
+          <Link
+            href="/markets"
+            className="px-6 py-3 rounded-xl bg-[#52A447] text-black font-semibold hover:opacity-90"
+          >
+            View Markets
+          </Link>
+
+          <Link
+            href="/news"
+            className="px-6 py-3 rounded-xl border border-gray-600 text-white hover:bg-gray-900"
+          >
+            Latest News
+          </Link>
+        </div>
+      </section>
+    </main
